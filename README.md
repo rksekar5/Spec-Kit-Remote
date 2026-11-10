@@ -8,9 +8,13 @@ python3 tasks.py add "Pay invoice"
 python3 tasks.py add "Review release"
 python3 tasks.py list
 python3 tasks.py done 1
+python3 tasks.py reopen 1
 python3 tasks.py list --json
 python3 -m unittest discover -s tests -v
 ```
+
+`reopen ID` restores a completed task to open. Reopening an open task succeeds; a missing ID exits 2
+without changing existing tasks. Titles and IDs are preserved.
 
 Data persists in `tasks.db` in the working directory. Select another file with
 `python3 tasks.py --db /path/to/tasks.db list`. The parent directory must exist.

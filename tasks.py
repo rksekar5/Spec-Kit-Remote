@@ -44,6 +44,16 @@ def complete_task(db, task_id):
         raise ValueError(f'Task {task_id} does not exist.')
 
 
+def reopen_task(db, task_id):
+    """Restore an existing task to open, including an already-open task."""
+    if not -(2**63) <= task_id < 2**63:
+        raise ValueError(f'Task {task_id} does not exist.')
+    with db:
+        cursor = db.execute("UPDATE tasks SET status = 'open' WHERE id = ?", (task_id,))
+    if not cursor.rowcount:
+        raise ValueError(f'Task {task_id} does not exist.')
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description='Legacy Tasks — a local task tracker')
     parser.add_argument('--db', default='tasks.db', help='SQLite database path (default: tasks.db)')
@@ -56,6 +66,8 @@ def main(argv=None):
     listing.add_argument('--json', action='store_true', help='Output a JSON array')
     done = commands.add_parser('done', help='Complete a task')
     done.add_argument('id', type=int)
+    reopen = commands.add_parser('reopen', help='Reopen a completed task')
+    reopen.add_argument('id', type=int)
     args = parser.parse_args(argv)
     try:
         with closing(connect(args.db)) as db:
@@ -64,6 +76,9 @@ def main(argv=None):
             elif args.command == 'done':
                 complete_task(db, args.id)
                 print(f'Completed task {args.id}.')
+            elif args.command == 'reopen':
+                reopen_task(db, args.id)
+                print(f'Reopened task {args.id}.')
             else:
                 rows = list_tasks(db, search=args.search, status=args.status)
                 if args.json:
