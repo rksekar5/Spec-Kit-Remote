@@ -46,8 +46,8 @@ and a pinned Spec Kit CLI smoke test plus artifact audit. Each run uploads logs 
 See [evidence limits and team workflow](docs/workflow.md#github-actions-added-after-the-initial-pr):
 CI does not replay or retroactively prove the original Codex agent skill execution.
 
-## Issue-driven implementation
-A maintainer can add `agent-ready` to a reviewed feature or bug issue to start GitHub Copilot through
-GitHub Agentic Workflows. It follows the installed Spec Kit instructions, tests the changes, and
-creates a draft PR for human review. No model API key is required; eligible Copilot access is required.
-See [setup, limits, and the first pilot](docs/issue-automation.md).
+## Issue-driven implementation with Codex
+Create a feature or bug issue, then give its URL to Codex while signed in with your ChatGPT account.
+Codex follows the installed Spec Kit instructions, tests the change, and opens a PR for human review.
+GitHub Actions runs verification; adding a label does not start an AI agent.
+See [Codex handoff and review](docs/issue-automation.md).

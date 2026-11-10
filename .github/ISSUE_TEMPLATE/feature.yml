@@ -23,4 +23,4 @@ body:
       description: Keep this to tasks.py, tests, feature specs, or documentation.
   - type: markdown
     attributes:
-      value: A maintainer reviews this issue, then adds agent-ready to start Copilot. Do not include secrets.
+      value: A maintainer reviews this issue, then shares its URL with Codex to start implementation. Do not include secrets.
