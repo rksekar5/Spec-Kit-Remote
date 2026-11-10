@@ -22,8 +22,19 @@ def add_task(db, title):
     return cursor.lastrowid
 
 
-def list_tasks(db):
-    return [dict(row) for row in db.execute('SELECT id, title, status FROM tasks ORDER BY id')]
+def list_tasks(db, search='', status='all'):
+    """Read tasks in legacy order with literal Unicode matching; no schema changes."""
+    if status not in ('all', 'open', 'done'):
+        raise ValueError('Status must be all, open, or done.')
+    query = 'SELECT id, title, status FROM tasks'
+    parameters = ()
+    if status != 'all':
+        query += ' WHERE status = ?'
+        parameters = (status,)
+    query += ' ORDER BY id'
+    needle = search.strip().casefold()
+    return [dict(row) for row in db.execute(query, parameters)
+            if needle in row['title'].casefold()]
 
 
 def complete_task(db, task_id):
@@ -40,6 +51,8 @@ def main(argv=None):
     add = commands.add_parser('add', help='Add a task')
     add.add_argument('title')
     listing = commands.add_parser('list', help='List tasks')
+    listing.add_argument('--search', default='', help='Literal case-insensitive title fragment')
+    listing.add_argument('--status', choices=('all', 'open', 'done'), default='all', help='Filter completion status')
     listing.add_argument('--json', action='store_true', help='Output a JSON array')
     done = commands.add_parser('done', help='Complete a task')
     done.add_argument('id', type=int)
@@ -52,7 +65,7 @@ def main(argv=None):
                 complete_task(db, args.id)
                 print(f'Completed task {args.id}.')
             else:
-                rows = list_tasks(db)
+                rows = list_tasks(db, search=args.search, status=args.status)
                 if args.json:
                     print(json.dumps(rows, ensure_ascii=False))
                 elif not rows:
