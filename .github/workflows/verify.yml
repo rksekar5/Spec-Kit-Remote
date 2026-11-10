@@ -81,3 +81,22 @@ jobs:
           name: spec-kit-evidence
           path: work/evidence/
           retention-days: 14
+
+  agent-workflow:
+    name: Validate issue automation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install pinned GitHub Agentic Workflows compiler
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh extension install github/gh-aw --pin v1.2.2
+      - name: Compile and validate the workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh aw compile issue-to-pr --validate
+          git diff --exit-code -- .github/workflows/issue-to-pr.lock.yml .github/aw/actions-lock.json .gitattributes

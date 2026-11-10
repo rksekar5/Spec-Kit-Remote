@@ -1,0 +1,26 @@
+name: Bug for Spec Kit
+description: Provide a reproducible task tracker bug.
+title: "[Bug] "
+body:
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include commands, inputs and Python version. Remove private data.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior and acceptance criteria
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: A maintainer reviews this issue, then adds agent-ready to start Copilot. Do not include secrets.

@@ -45,3 +45,9 @@ there is no hosted website or long-running service.
 and a pinned Spec Kit CLI smoke test plus artifact audit. Each run uploads logs as artifacts.
 See [evidence limits and team workflow](docs/workflow.md#github-actions-added-after-the-initial-pr):
 CI does not replay or retroactively prove the original Codex agent skill execution.
+
+## Issue-driven implementation
+A maintainer can add `agent-ready` to a reviewed feature or bug issue to start GitHub Copilot through
+GitHub Agentic Workflows. It follows the installed Spec Kit instructions, tests the changes, and
+creates a draft PR for human review. No model API key is required; eligible Copilot access is required.
+See [setup, limits, and the first pilot](docs/issue-automation.md).
