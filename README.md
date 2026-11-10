@@ -39,3 +39,9 @@ there is no hosted website or long-running service.
 - [Completed tasks](specs/001-task-search/tasks.md)
 - [Verification evidence](specs/001-task-search/verification.md)
 - [Spec Kit workflow and reproducibility](docs/workflow.md)
+
+## Continuous verification
+[GitHub Actions](https://github.com/rksekar5/Spec-Kit-Remote/actions) runs the tests, virtual demo,
+and a pinned Spec Kit CLI smoke test plus artifact audit. Each run uploads logs as artifacts.
+See [evidence limits and team workflow](docs/workflow.md#github-actions-added-after-the-initial-pr):
+CI does not replay or retroactively prove the original Codex agent skill execution.

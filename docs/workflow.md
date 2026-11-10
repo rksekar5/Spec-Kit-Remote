@@ -87,3 +87,35 @@ Findings: missing 0; partial 0; contradicts 0; unrequested 0. No severity findin
 Result: **Converged — implementation satisfies the spec, plan, and tasks within the stated scope.**
 The convergence review made no edits to the spec, plan, application, or task list.
 This ledger records the review afterward; it does not claim a separate verify executable was run.
+
+## GitHub Actions added after the initial PR
+The initial implementation did not include CI. `.github/workflows/verify.yml` now runs on pushes,
+pull requests, and manual dispatch (manual dispatch becomes available once the workflow is on the
+default branch). It has two jobs:
+
+1. Application tests and virtual CLI demo, with downloadable logs.
+2. Pinned Spec Kit CLI installation, actual shell command smoke run in a disposable copy, and a
+   structural audit of committed specs, tasks, review markers and installed skills.
+
+`specify init`, template resolution, setup-plan, setup-tasks and prerequisite checks have named,
+traceable output in `spec-kit-shell.log`. Setup commands operate on copies to preserve authored specs.
+The run summary and artifacts explicitly distinguish these commands from agent skill execution.
+
+This workflow cannot retroactively prove the previous Codex conversation. The original nine skill
+stages were performed by the chat agent reading their instructions; no hosted Actions or separate
+Codex CLI transcript existed. The ledger is a self-report backed by artifacts and test evidence,
+not an independently recorded agent execution trace. Replaying all agent stages would require a
+model runner, secure model credentials, cost controls and review gates; those are not configured here.
+
+## How teams normally track feature work
+A GitHub issue represents a feature or task. A GitHub Project is an owner-level planning board that
+contains references to issues and PRs; it is not a separate repository feature object. Teams add the
+feature issue to the board, set fields such as Status, Priority and Iteration, split implementation
+work into linked issues when needed, and link the PR back to the feature. CI checks the PR's exact
+commit; reviewers inspect specifications and code before merge. Project automation can move items
+through Todo, In Progress, In Review and Done. Board movement is configured separately from CI.
+
+For this repository issue #1 and PR #2 exist, but there is no board item because Project creation was
+rejected by GitHub. A GitHub App needs appropriate user/organization Projects write permission; a
+separately configured token needs the corresponding Projects scope. Do not put tokens in source or
+chat. After access is configured, create the board and add issue #1 and PR #2 to it.
