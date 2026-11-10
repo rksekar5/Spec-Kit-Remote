@@ -1,0 +1,26 @@
+name: Feature for Spec Kit
+description: Describe a small feature for the task tracker.
+title: "[Feature] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and desired behavior
+      description: Who needs this and what should change?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Give observable examples, including invalid inputs and compatibility.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and exclusions
+      description: Keep this to tasks.py, tests, feature specs, or documentation.
+  - type: markdown
+    attributes:
+      value: A maintainer reviews this issue, then adds agent-ready to start Copilot. Do not include secrets.
